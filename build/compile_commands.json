@@ -1,0 +1,32 @@
+[
+{
+  "directory": "/home/falitac/code/cpp/opengl/build",
+  "command": "/usr/bin/c++   -g -std=gnu++20 -o CMakeFiles/cloth_sim.dir/src/App.cpp.o -c /home/falitac/code/cpp/opengl/src/App.cpp",
+  "file": "/home/falitac/code/cpp/opengl/src/App.cpp"
+},
+{
+  "directory": "/home/falitac/code/cpp/opengl/build",
+  "command": "/usr/bin/c++   -g -std=gnu++20 -o CMakeFiles/cloth_sim.dir/src/Main.cpp.o -c /home/falitac/code/cpp/opengl/src/Main.cpp",
+  "file": "/home/falitac/code/cpp/opengl/src/Main.cpp"
+},
+{
+  "directory": "/home/falitac/code/cpp/opengl/build",
+  "command": "/usr/bin/c++   -g -std=gnu++20 -o CMakeFiles/cloth_sim.dir/src/entities/Entity.cpp.o -c /home/falitac/code/cpp/opengl/src/entities/Entity.cpp",
+  "file": "/home/falitac/code/cpp/opengl/src/entities/Entity.cpp"
+},
+{
+  "directory": "/home/falitac/code/cpp/opengl/build",
+  "command": "/usr/bin/c++   -g -std=gnu++20 -o CMakeFiles/cloth_sim.dir/src/entities/Plane.cpp.o -c /home/falitac/code/cpp/opengl/src/entities/Plane.cpp",
+  "file": "/home/falitac/code/cpp/opengl/src/entities/Plane.cpp"
+},
+{
+  "directory": "/home/falitac/code/cpp/opengl/build",
+  "command": "/usr/bin/c++   -g -std=gnu++20 -o CMakeFiles/cloth_sim.dir/src/graphics/Shader.cpp.o -c /home/falitac/code/cpp/opengl/src/graphics/Shader.cpp",
+  "file": "/home/falitac/code/cpp/opengl/src/graphics/Shader.cpp"
+},
+{
+  "directory": "/home/falitac/code/cpp/opengl/build",
+  "command": "/usr/bin/c++   -g -std=gnu++20 -o CMakeFiles/cloth_sim.dir/src/utility/Camera.cpp.o -c /home/falitac/code/cpp/opengl/src/utility/Camera.cpp",
+  "file": "/home/falitac/code/cpp/opengl/src/utility/Camera.cpp"
+}
+]
