@@ -1,4 +1,4 @@
 
 
-build/*/*
-!build/shaders/*
+build/
+!build/shaders/
