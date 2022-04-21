@@ -3,6 +3,8 @@
 #include <vector>
 #include "Entity.hpp"
 
+
+
 class Plane : public Entity {
 public:
   Plane(
@@ -20,10 +22,16 @@ private:
   GLuint vbo;
   GLuint ebo;
 
+  unsigned int xdiv;
+  unsigned int ydiv;
+
+  std::vector<glm::vec3> points;
+  std::vector<glm::vec3> pointVelocities;
+  std::vector<glm::vec3> pointForces;
   GLuint indicesCount;
 
   std::pair<
-    std::vector<float>,
+    std::vector<glm::vec3>,
     std::vector<GLuint>
   >
   generateVertices(float width, float height, unsigned int xdiv, unsigned int ydiv);

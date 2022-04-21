@@ -154,7 +154,7 @@ App::App()
 
   glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-  auto plane = std::make_unique<Plane>(0.8, 0.8, 20, 20);
+  auto plane = std::make_unique<Plane>(1.0, 1.0, 20, 20);
   
   entities.push_back(std::move(plane));
 

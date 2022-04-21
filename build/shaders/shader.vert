@@ -10,6 +10,7 @@ uniform mat4 Projection;
 out vec3 vertexColor;
 
 void main() {
-    vertexColor = vec3(gl_VertexID / 10.0);
+    float t = gl_VertexID / 400.0;
+    vertexColor = vec3(sin(t) * sin(t * t), cos((t+5)*(t+3)), 0.5);
     gl_Position = MVP * vec4(vertex, 1.0);
 }

@@ -6,7 +6,10 @@ Plane::Plane(
   float height,
   unsigned int xdiv,
   unsigned int ydiv
-) {
+)
+: xdiv(xdiv)
+, ydiv(ydiv)
+{
   glGenVertexArrays(1, &vao);
   glGenBuffers(1, &vbo);
   glGenBuffers(1, &ebo);
@@ -20,8 +23,11 @@ Plane::Plane(
     GL_ARRAY_BUFFER, 
     vertices.size() * sizeof(vertices[0]),
     vertices.data(),
-    GL_STATIC_DRAW
+    GL_DYNAMIC_DRAW
   );
+
+  points = std::move(vertices);
+  pointForces = pointVelocities = std::vector<glm::vec3>(points.size(), {0.0f, 0.0f, 0.0f});
 
   glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
   glBufferData(
@@ -42,9 +48,55 @@ Plane::Plane(
 Plane::~Plane() {
   glDeleteBuffers(1, &vbo);
   glDeleteBuffers(1, &ebo);
+  glDeleteVertexArrays(1, &vao);
 }
 
 void Plane::update(double dt) {
+  std::printf("%4lf\n", dt);
+  dt /= 1000.f;
+  constexpr auto gravity = glm::vec3(0.0f, 9.8, 0.0);
+
+  float xlen = 1.0 / static_cast<float>(xdiv);
+  float ylen = 1.0 / static_cast<float>(ydiv);
+
+  float k = 10.1;
+  auto calcForce = [&] (int index, int offset) {
+    try {
+      auto& p1 = points.at(index);
+      auto& p2 = points.at(index - offset);
+      auto dist = glm::distance(p1, p2);
+      float forceVal = k * (xlen - dist);
+      pointForces[index] += forceVal * glm::normalize(p1 - p2);
+    } catch(...) {
+    }
+  };
+
+  for(int j = 0; j < ydiv; j++) {
+    for(int i = 0; i <= xdiv; i++) {
+      auto index = j * (xdiv + 1) + i;
+
+      pointForces[index] = {};
+      calcForce(index, -1);
+      calcForce(index,  1);
+      calcForce(index,  xdiv + 1);
+      calcForce(index, -xdiv - 1);
+
+
+      pointVelocities[index] += pointForces[index];
+      //pointVelocities[index] -= gravity;
+
+      auto velocity = pointVelocities[index];
+      points[index] +=
+      static_cast<float>(dt) * velocity;
+    }
+  }
+  glBindBuffer(GL_ARRAY_BUFFER, vbo);
+  glBufferSubData(
+    GL_ARRAY_BUFFER,
+    0,
+    points.size() * sizeof(points[0]),
+    points.data()
+  );
 
 }
 
@@ -55,20 +107,22 @@ void Plane::draw() {
 }
 
 std::pair<
-  std::vector<float>,
+  std::vector<glm::vec3>,
   std::vector<GLuint>
 >
 Plane::generateVertices(float width, float height, unsigned xdiv, unsigned ydiv) {
-  std::vector<float> vertices;
+  std::vector<glm::vec3> vertices;
   std::vector<GLuint> indices;
   vertices.reserve((1 + xdiv + 1) * (ydiv + 1) * 3);
   indices.reserve(xdiv * ydiv * 2);
 
   for(int j = 0; j <= ydiv; j++) {
     for(int i = 0; i <= xdiv; i++) {
-      vertices.emplace_back(width * i / static_cast<float>(xdiv));
-      vertices.emplace_back(height * j / static_cast<float>(ydiv));
-      vertices.emplace_back(0.0);
+      vertices.emplace_back(
+        width * i / static_cast<float>(xdiv),
+        height * j / static_cast<float>(ydiv),
+        0.0
+      );
     }
   }
 
